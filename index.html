@@ -7,105 +7,187 @@
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* ألوان مستوحاة من اللوجو */
-            --primary-blue: #0056b3; /* الأزرق الغامق */
-            --primary-red: #d32f2f; /* الأحمر */
-            --whatsapp-green: #25d366;
+            --main-blue: #0056b3;
+            --main-red: #d32f2f;
             --bg-white: #ffffff;
-            --text-dark: #1a1a1a;
-            --card-gray: #f8f9fa;
+            --text-dark: #333;
         }
 
         body {
             font-family: 'Cairo', sans-serif;
-            background-color: var(--bg-white);
-            color: var(--text-dark);
-            margin: 0;
-            padding: 0;
-            overflow-x: hidden;
-            /* علامة مائية للوجو خفيفة جداً في الخلفية */
-            background-image: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), url('logo.png');
+            background-color: #f4f4f4;
+            margin: 0; padding: 0;
+            background-image: linear-gradient(rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.92)), url('logo.png');
             background-repeat: no-repeat;
-            background-position: center 30%;
-            background-size: 50% auto;
+            background-position: center;
+            background-size: 45% auto;
             background-attachment: fixed;
         }
 
         header {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 15px 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            border-bottom: 3px solid var(--primary-blue);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
+            background: white;
+            padding: 15px;
+            text-align: center;
+            border-bottom: 4px solid var(--main-blue);
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
         }
 
-        header img {
-            height: 90px;
-            width: auto;
-            margin-bottom: 5px;
-        }
-
-        header h1 {
-            margin: 0;
-            font-size: 26px;
-            color: var(--primary-red);
-            text-transform: uppercase;
-        }
+        header img { height: 80px; }
 
         .products-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 25px;
-            padding: 30px;
-            padding-bottom: 120px; /* مساحة تحت عشان زر الإضافة */
+            gap: 20px;
+            padding: 25px;
         }
 
+        /* تصميم المربعات (Cards) */
         .product-card {
-            background: rgba(248, 249, 250, 0.95);
+            background: white;
             border-radius: 15px;
-            border: 1px solid #eee;
-            padding: 20px;
+            padding: 15px;
             text-align: center;
-            transition: 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            display: flex;
-            flex-direction: column;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            border: 1px solid #eee;
+            cursor: pointer;
+            transition: 0.3s;
         }
 
-        .product-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--primary-red);
-            box-shadow: 0 8px 25px rgba(211, 47, 47, 0.15);
+        .product-card:hover { transform: translateY(-5px); border-color: var(--main-blue); }
+
+        .product-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: contain;
+            border-radius: 10px;
+            background: #f9f9f9;
         }
 
-        .product-icon {
-            font-size: 60px;
-            color: var(--primary-blue);
+        .product-card h3 { margin: 15px 0 5px 0; color: var(--text-dark); }
+
+        .price-tag {
+            background: var(--main-red);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            display: inline-block;
+            font-weight: bold;
             margin-bottom: 15px;
         }
 
-        .product-name {
-            font-size: 18px;
-            margin: 0 0 10px 0;
-            font-weight: bold;
-        }
-
-        .price {
-            font-size: 24px;
-            color: var(--primary-red);
-            font-weight: bold;
-            display: block;
-            margin: 10px 0 20px 0;
-        }
-
-        .buy-btn {
-            background-color: var(--whatsapp-green);
+        /* زر الإضافة (للأدمن فقط - يظهر فوق على اليمين) */
+        #admin-add-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: var(--main-blue);
             color: white;
-            text-decoration:
-                
+            border: none;
+            border-radius: 50%;
+            font-size: 30px;
+            cursor: pointer;
+            z-index: 2000;
+            display: none; /* مخفي افتراضياً */
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        /* نافذة الوصف (Pop-up) */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 3000;
+            justify-content: center; align-items: center;
+        }
+
+        .modal-content {
+            background: white;
+            width: 90%;
+            max-width: 500px;
+            padding: 25px;
+            border-radius: 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .close-btn { position: absolute; top: 15px; left: 15px; font-size: 25px; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+<header onclick="checkAdmin()">
+    <img src="logo.png" alt="Badran CNC">
+    <h1 style="color:var(--main-red); margin:5px 0;">Badran CNC Store</h1>
+</header>
+
+<div class="products-grid" id="mainGrid">
+    </div>
+
+<button id="admin-add-btn" onclick="addNewProduct()">+</button>
+
+<div id="descModal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeModal()">&times;</span>
+        <img id="modalImg" src="" style="width:100%; border-radius:10px;">
+        <h2 id="modalTitle"></h2>
+        <p id="modalDesc"></p>
+        <div id="modalPrice" class="price-tag"></div>
+        <br>
+        <a id="modalWa" href="" target="_blank" style="background:#25d366; color:white; padding:12px 30px; text-decoration:none; border-radius:10px; font-weight:bold; display:inline-block; margin-top:10px;">طلب المنتج</a>
+    </div>
+</div>
+
+<script>
+    const whatsapp = "201118886050";
+    const grid = document.getElementById('mainGrid');
+
+    // وظيفة سرية: اضغط على اللوجو 5 مرات عشان يظهر زر الإضافة
+    let clickCount = 0;
+    function checkAdmin() {
+        clickCount++;
+        if(clickCount === 5) {
+            document.getElementById('admin-add-btn').style.display = 'block';
+            alert("تم تفعيل وضع الأدمن بنجاح يا يوسف ✅");
+        }
+    }
+
+    function addProductToGrid(name, price, desc, img) {
+        const card = document.createElement('div');
+        card.className = 'product-card';
+        card.innerHTML = `
+            <img src="${img || 'logo.png'}">
+            <h3>${name}</h3>
+            <div class="price-tag">${price} ج.م</div>
+        `;
+        card.onclick = () => showDesc(name, price, desc, img);
+        grid.appendChild(card);
+    }
+
+    function showDesc(name, price, desc, img) {
+        document.getElementById('modalTitle').innerText = name;
+        document.getElementById('modalDesc').innerText = desc;
+        document.getElementById('modalPrice').innerText = price + " ج.م";
+        document.getElementById('modalImg').src = img || 'logo.png';
+        document.getElementById('modalWa').href = `https://wa.me/${whatsapp}?text=${encodeURIComponent('أريد الاستفسار عن: ' + name)}`;
+        document.getElementById('descModal').style.display = 'flex';
+    }
+
+    function closeModal() { document.getElementById('descModal').style.display = 'none'; }
+
+    function addNewProduct() {
+        const name = prompt("اسم المنتج:");
+        const price = prompt("السعر:");
+        const desc = prompt("الوصف الكامل:");
+        const img = prompt("اسم ملف الصورة (ارفعه على جيت هاب أولاً):");
+        if(name && price) addProductToGrid(name, price, desc, img);
+    }
+
+    // منتج افتراضي
+    addProductToGrid("موتور سبندل 2.2KW", "4500", "هذا الموتور مخصص للعمل الشاق وتبريد الهواء، صناعة ممتازة.", "logo.png");
+</script>
+
+</body>
+</html>
