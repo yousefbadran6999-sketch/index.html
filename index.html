@@ -1,0 +1,125 @@
+1<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Badran CNC Store | متجر بدران لقطع الغيار</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #f39c12; 
+            --dark: #0a0a0a;
+            --card-bg: #1a1a1a;
+            --text: #ffffff;
+            --whatsapp: #25d366;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--dark);
+            color: var(--text);
+            margin: 0;
+            padding: 0;
+            /* العلامة المائية للوجو في الخلفية */
+            background-image: linear-gradient(rgba(10, 10, 10, 0.8), rgba(10, 10, 10, 0.8)), url('logo.png');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 60% auto;
+            background-attachment: fixed;
+        }
+
+        header {
+            background: #111;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            border-bottom: 3px solid var(--primary);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.8);
+        }
+
+        header img {
+            height: 80px;
+            margin-bottom: 10px;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 28px;
+            color: var(--primary);
+            text-transform: uppercase;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            padding: 30px;
+        }
+
+        .product-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            border: 1px solid #333;
+            padding: 15px;
+            text-align: center;
+            transition: 0.3s;
+        }
+
+        .product-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-5px);
+        }
+
+        .product-img {
+            width: 100%;
+            height: 200px;
+            object-fit: contain;
+            background: #000;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .price {
+            font-size: 22px;
+            color: var(--primary);
+            font-weight: bold;
+            display: block;
+            margin: 10px 0;
+        }
+
+        .buy-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: var(--whatsapp);
+            color: white;
+            text-decoration: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+        /* زر الإضافة العائم */
+        .add-btn {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            width: 60px;
+            height: 60px;
+            background: var(--primary);
+            border-radius: 50%;
+            border: none;
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <img
