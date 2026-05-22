@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Badran CNC Store</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+    --navy-dark: #081d3a;
+    --navy-main: #0d2c54;
+    --red-menu: #a81c1c;
+    --bg-gray: #f4f6f9;
+    --card-border: #e2e8f0;
+    --text-main: #1e293b;
+    --text-muted: #64748b;
+    --btn-blue: #0f3661;
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Cairo', sans-serif;
+    background-color: var(--bg-gray);
+    color: var(--text-main);
+    min-height: 100vh;
+    direction: rtl;
+    position: relative;
+}
+
+/* العلامة المائية الكبيرة في الخلفية المأخوذة من لوجو بدران */
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: url('logo-badran.png') center/45% no-repeat;
+    opacity: 0.04;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* الشريط العلوي الداكن */
+.top-bar {
+    background-color: var(--navy-dark);
+    color: #cbd5e1;
+    padding: 8px 24px;
+    font-size: 0.78rem;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 20px;
+    position: relative;
+    z-index: 10;
+}
+.top-bar-left {
+    margin-left: auto;
+    color: #94a3b8;
+}
+.top-bar-right a {
+    color: #cbd5e1;
+    text-decoration: none;
+    font-size: 0.8rem;
+}
+.top-bar-right a:hover {
+    color: white;
+}
+
+/* الهيدر الرئيسي للموقع */
+header {
+    background-color: var(--navy-main);
+    padding: 16px 24px;
+    position: relative;
+    z-index: 10;
+}
+.header-inner {
+    max-width: 1300px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+.logo-area {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    text-decoration: none;
+}
+.logo-area img {
+    height: 70px;
+    width: auto;
+    object-fit: contain;
+}
+.logo-text h1 {
+    color: white;
+    font-size: 2rem;
+    font-weight: 900;
+    font-family: 'Cairo', sans-serif;
+    letter-spacing: -0.5px;
+}
+
+.header-controls {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+.search-container {
+    display: flex;
+    align-items: center;
+    background: white;
+    border-radius: 4px;
+    overflow: hidden;
+    width: 280px;
+    height: 38px;
+}
+.search-container input {
+    border: none;
+    outline: none;
+    padding: 0 12px;
+    font-family: 'Cairo', sans-serif;
+    font-size: 0.85rem;
+    flex: 1;
+    height: 100%;
+}
+.search-submit-btn {
+    background-color: var(--btn-blue);
+    border: none;
+    color: white;
+    width: 42px;
+    height: 100%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.search-submit-btn svg {
+    width: 16px;
+    height: 16px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.5;
+}
+
+.cart-toggle-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-family: 'Cairo', sans-serif;
+    font-size: 0.9rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 8px;
+}
+.cart-counter-badge {
+    background-color: #d946ef;
+    color: white;
+    font-size: 0.75rem;
+    padding: 1px 7px;
+    border-radius: 10px;
+    font-weight: 700;
+}
+.login-nav-btn {
+    background-color: var(--btn-blue);
+    color: white;
+    border: 1px solid rgba(255,255,255,0.15);
+    padding: 6px 18px;
+    border-radius: 4px;
+    font-family: 'Cairo', sans-serif;
+    font-size: 0.88rem;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background 0.2s;
+}
+.login-nav-btn:hover {
+    background-color: #144375;
+}
+
+/* شريط القائمة الأحمر */
+.red-navigation-bar {
+    background-color: var(--red-menu);
+    color: white;
+    position: relative;
+    z-index: 10;
+}
+.nav-container-inner {
+    max-width: 1300px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
+}
+.menu-items-list {
+    display: flex;
+    list-style: none;
+}
+.menu-items-list li a {
+    color: white;
+    text-decoration: none;
+    padding: 12px 20px;
+    display: inline-block;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: background-color 0.2s;
+}
+.menu-items-list li.active a, .menu-items-list li a:hover {
+    background-color: rgba(0,0,0,0.15);
+}
+.hamburger-menu-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-family: 'Cairo', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* شريط الإحصائيات والأرقام */
+.stats-row {
+    background: white;
+    border-bottom: 1px solid #e2e8f0;
+    padding: 10px 24px;
+    position: relative;
+    z-index: 5;
+}
+.stats-inner {
+    max-width: 1300px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.stats-info-box {
+    display: flex;
+    gap: 15px;
+    font-size: 0.82rem;
+    color: var(--text-muted);
+}
+.stats-info-box strong {
+    color: var(--text-main);
+}
+
+/* حاوية شبكة المنتجات */
+.storefront-main-container {
+    max-width: 1300px;
+    margin: 40px auto;
+    padding: 0 24px;
+    position: relative;
+    z-index: 5;
+}
+
+.products-display-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 24px;
+}
+
+/* بطاقة المنتج المطابقة تماماً للصورة المعروضة */
+.product-card-view {
+    background: white;
+    border: 1px solid var(--card-border);
+    border-radius: 4px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    transition: box-shadow 0.2s, transform 0.2s;
+}
+.product-card-view:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+}
+
+.product-img-frame {
+    width: 100%;
+    height: 190px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+    background: white;
+}
+.product-img-frame img {
+    max-height: 100%;
+    max-width: 100%;
+    object-fit: contain;
+}
+
+.product-title-text {
+    font-size: 0.88rem;
+    font-weight: 400;
+    color: #1e293b;
+    line-height: 1.4;
+    margin-bottom: 8px;
+    text-align: left;
+    min-height: 44px;
+}
+
+.product-price-label {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #0f172a;
+    margin-bottom: 14px;
+    text-align: left;
+}
+
+.product-purchase-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: auto;
+}
+.quantity-selection-input {
+    width: 44px;
+    height: 34px;
+    text-align: center;
+    border: 1px solid #cbd5e1;
+    border-radius: 4px;
+    font-family: 'Cairo', sans-serif;
+    font-size: 0.85rem;
+    color: var(--text-main);
+}
+.add-to-cart-action-btn {
+    flex: 1;
+    background-color: var(--navy-main);
+    color: white;
+    border: none;
+    height: 34px;
+    border-radius: 4px;
+    font-family: 'Cairo', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+.add-to-cart-action-btn:hover {
+    background-color: var(--navy-dark);
+}
+
+/* نافذة التفاصيل المنبثقة للمنتج عند الضغط عليه */
+.custom-modal-window {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 2000;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    backdrop-filter: blur(3px);
+}
+.custom-modal-window.active { display: flex; }
+.custom-modal-content {
+    background: white;
+    width: 100%;
+    max-width: 460px;
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+    padding: 20px;
+}
+.close-modal-x {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: #f1f5f9;
+    border: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* السلة الجانبية الفاخرة */
+.cart-sidebar-panel {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    max-width: 400px;
+    height: 100%;
+    background: white;
+    z-index: 3000;
+    box-shadow: 4px 0 25px rgba(0,0,0,0.15);
+    display: flex;
+    flex-direction: column;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+}
+.cart-sidebar-panel.visible {
+    transform: translateX(0);
+}
+.cart-panel-header {
+    padding: 16px;
+    background-color: var(--navy-main);
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.cart-panel-items-container {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px;
+}
+.cart-panel-footer {
+    padding: 16px;
+    border-top: 1px solid #e2e8f0;
+}
+
+@media (max-width: 768px) {
+    .header-inner {
+        flex-direction: column;
+        gap: 12px;
+    }
+    .search-container {
+        width: 100%;
+    }
+    .menu-items-list {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- شريط الإعلانات العلوي المقتبس من هويتك -->
+<div class="top-bar">
+    <div class="top-bar-left">🚀 شحن سريع لجميع محافظات مصر &nbsp;|&nbsp; 💳 دفع آمن عبر فودافون كاش</div>
+    <div class="top-bar-right">
+        <a href="#">Login / Register</a>
+    </div>
+</div>
+
+<!-- هيدر المتجر الاحترافي المتطابق مئة بالمئة -->
+<header>
+    <div class="header-inner">
+        <a href="#" class="logo-area">
+            <img src="logo-badran.png" alt="Badran CNC" onerror="this.src='logo.png'">
+            <div class="logo-text">
+                <h1>Badran CNC Store</h1>
+            </div>
+        </a>
+        
+        <div class="header-controls">
+            <div class="search-container">
+                <input type="text" placeholder="Search..." id="searchInput" oninput="searchProducts()">
+                <button class="search-submit-btn">
+                    <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                </button>
+            </div>
+            
+            <button class="cart-toggle-btn" onclick="openCartPanel()">
+                <span>🛒 Cart</span>
+                <span class="cart-counter-badge" id="cartCountLabel">0</span>
+            </button>
+            
+            <a href="#" class="login-nav-btn">Register</a>
+        </div>
+    </div>
+</header>
+
+<!-- شريط الأقسام ذو اللون الأحمر الداكن المميز -->
+<nav class="red-navigation-bar">
+    <div class="nav-container-inner">
+        <ul class="menu-items-list">
+            <li class="active"><a href="#">Home</a></li>
+            <li><a href="#">Shop</a></li>
+            <li><a href="#">Products</a></li>
+            <li><a href="#">Tools</a></li>
+            <li><a href="#">Machines</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+        <button class="hamburger-menu-btn">☰ Menu</button>
+    </div>
+</nav>
+
+<!-- شريط قراءة أعداد المخزون الحالية للزائر -->
+<div class="stats-row">
+    <div class="stats-inner">
+        <div class="stats-info-box">
+            <span>المنتجات المتاحة بالمخزن: <strong id="totalProductsCount">0</strong> منتج نشط</span>
+        </div>
+    </div>
+</div>
+
+<!-- الحاوية الأساسية لعرض المنتجات في شبكة هندسية مربعة -->
+<main class="storefront-main-container">
+    <div class="products-display-grid" id="productsGridContainer">
+        <!-- يتم تحميل السلع والأسعار آلياً هنا من Firebase لتطابق شكل كروكي التصميم -->
+    </div>
+</main>
+
+<!-- نافذة معاينة تفاصيل المنتج المنبثقة -->
+<div class="custom-modal-window" id="productDetailModal">
+    <div class="custom-modal-content">
+        <button class="close-modal-x" onclick="closeProductModal()">✕</button>
+        <div style="text-align: center; margin-bottom: 15px;">
+            <img id="modalProductImg" src="" alt="" style="max-height: 200px; max-width: 100%; object-fit: contain;">
+        </div>
+        <h3 id="modalProductTitle" style="margin-bottom: 10px; font-size: 1.1rem;"></h3>
+        <p id="modalProductDesc" style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px; line-height: 1.6;"></p>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <span id="modalProductPrice" style="font-weight: 700; color: #b91c1c; font-size: 1.1rem;"></span>
+            <button class="add-to-cart-action-btn" id="modalAddToCartBtn" style="padding: 0 20px; flex: none;">أضف للسلة 🛒</button>
+        </div>
+    </div>
+</div>
+
+<!-- لوحة عربة التسوق الجانبية لإنهاء الطلب عبر واتساب -->
+<div class="cart-sidebar-panel" id="cartSidebarPanel">
+    <div class="cart-panel-header">
+        <h3>سلة المشتريات</h3>
+        <button style="background:none; border:none; color:white; font-size:20px; cursor:pointer;" onclick="closeCartPanel()">✕</button>
+    </div>
+    <div class="cart-panel-items-container" id="cartItemsContainer">
+        <p style="text-align: center; color: var(--text-muted); margin-top: 40px;">السلة فارغة حالياً.</p>
+    </div>
+    <div class="cart-panel-footer">
+        <button class="add-to-cart-action-btn" style="width: 100%; background-color: #16a34a; height: 42px;" onclick="alert('جاري الانتقال للواتساب لإتمام طلبك...')">طلب المنتجات عبر واتساب</button>
+    </div>
+</div>
+
+<!-- معالج جلب البيانات التلقائي من قاعدة البيانات ومزامنة السلة للزوار -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+  // ⚠️ ضع بيانات الـ Firebase الخاصة بمشروعك هنا لكي تسحب الواجهة السلع فوراً
+  const firebaseConfig = {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+    databaseURL: "https://YOUR_PROJECT_ID-default-rtdb.firebaseio.com",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_PROJECT_ID.appspot.com",
+    messagingSenderId: "YOUR_SENDER_ID",
+    appId: "YOUR_APP_ID"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
+  let localProducts = [];
+
+  const gridContainer = document.getElementById('productsGridContainer');
+  const totalCountLabel = document.getElementById('totalProductsCount');
+
+  // رندرة المنتجات بشكل مطابق تماماً لنمط الكروت المربعة الفاخرة بالصورة
+  function renderGrid(items) {
+    gridContainer.innerHTML = "";
+    if(!items || items.length === 0) {
+        gridContainer.innerHTML = "<p style='grid-column:1/-1; text-align:center; padding:40px; color:#64748b;'>لا توجد منتجات حالياً بالمخزن، قم بإضافة منتج من لوحة التحكم لتراه هنا مباشرة.</p>";
+        return;
+    }
+    items.forEach(prod => {
+        gridContainer.innerHTML += `
+            <div class="product-card-view" onclick="showProductDetails('${prod.id}')">
+                <div class="product-img-frame">
+                    <img src="${prod.image}" alt="${prod.name}">
+                </div>
+                <div class="product-title-text">${prod.name}</div>
+                <div class="product-price-label">${prod.price}</div>
+                <div class="product-purchase-row" onclick="event.stopPropagation();">
+                    <input type="number" class="quantity-selection-input" value="1" min="1" id="qty-${prod.id}">
+                    <button class="add-to-cart-action-btn" onclick="alert('تمت الإضافة إلى السلة بنجاح! 🛒')">Add to Cart</button>
+                </div>
+            </div>
+        `;
+    });
+  }
+
+  // الاستماع اللحظي للتغييرات من الفايربيز للعملاء دون تداخل
+  onValue(ref(db, 'products'), (snapshot) => {
+    const data = snapshot.val();
+    localProducts = [];
+    if(data) {
+        Object.keys(data).forEach(key => {
+            localProducts.push({ id: key, ...data[key] });
+        });
+    }
+    totalCountLabel.innerText = localProducts.length;
+    renderGrid(localProducts);
+  });
+
+  // ميزة البحث السريع المباشر في قائمة المنتجات المجلوبة
+  window.searchProducts = function() {
+    const q = document.getElementById('searchInput').value.toLowerCase();
+    const filtered = localProducts.filter(p => p.name.toLowerCase().includes(q));
+    renderGrid(filtered);
+  };
+
+  window.showProductDetails = function(id) {
+    const prod = localProducts.find(p => p.id === id);
+    if(!prod) return;
+    document.getElementById('modalProductImg').src = prod.image;
+    document.getElementById('modalProductTitle').innerText = prod.name;
+    document.getElementById('modalProductDesc').innerText = prod.desc || "لا يوجد وصف مدخل لهذا المنتج حالياً.";
+    document.getElementById('modalProductPrice').innerText = prod.price;
+    document.getElementById('productDetailModal').classList.add('active');
+  };
+
+  window.closeProductModal = function() {
+    document.getElementById('productDetailModal').classList.remove('active');
+  };
+  window.openCartPanel = function() { document.getElementById('cartSidebarPanel').classList.add('visible'); };
+  window.closeCartPanel = function() { document.getElementById('cartSidebarPanel').classList.remove('visible'); };
+</script>
+</body>
+</html>
